@@ -27,12 +27,34 @@ function addItemToDOM(input){
   list.appendChild(listItem)
 }
 
+function doesItemAlreadyExist(item){
+  const items = localStorage.getItem('items')
+  let doesItemAlreadyExist = false
+  if(items !== null){
+    const itemsArr = JSON.parse(items)
+    itemsArr.forEach((element) => {
+      console.log(element.todo)
+      console.log(item)
+      if(element.todo === item){
+        doesItemAlreadyExist = true
+      }
+    })
+  }
+  return doesItemAlreadyExist
+}
+
 function addToDo(e){
   e.preventDefault();
-  addItemToDOM(input.value)
-  addItemToStorage(input.value)
-  input.value = ''
-  checkUI()
+  console.log(doesItemAlreadyExist(input.value))
+  if(doesItemAlreadyExist(input.value)){
+    alert('Item already exists')
+  } else {
+    console.log('adding item')
+    addItemToDOM(input.value)
+    addItemToStorage(input.value)
+    input.value = ''
+    checkUI()
+  }
 }
 
 function createDeleteButton(){
