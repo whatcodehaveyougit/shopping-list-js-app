@@ -15,16 +15,19 @@ function addItemToStorage(item){
   }
 }
 
-// functions
-
-function addToDo(e){
-  e.preventDefault();
+function addItemToDOM(input){
+  console.log(input)
   const listItem = document.createElement('li')
-  const text = document.createTextNode(input.value)
+  const text = document.createTextNode(input)
   const button = createDeleteButton()
   listItem.appendChild(text)
   listItem.appendChild(button)
   list.appendChild(listItem)
+}
+
+function addToDo(e){
+  e.preventDefault();
+  addItemToDOM(input.value)
   addItemToStorage(input.value)
   input.value = ''
   checkUI()
@@ -33,18 +36,55 @@ function addToDo(e){
 function createDeleteButton(){
   const btn = document.createElement('button')
   btn.classList = 'remove-item btn-link text-red'
-  const icon = document.createElement('incon')
+  const icon = document.createElement('icon')
   icon.classList = 'fa-solid fa-xmark'
   btn.appendChild(icon)
+  console.log(btn)
   return btn;
 }
 
-function removeItem(e){
-  if(e.target.parentElement.classList.contains('remove-item')){
+function didUserClickDelete(e){
+  if (e.target.parentElement.classList.contains('remove-item')){
+    return true
+  }
+  return false
+}
+
+function clickItem(e){
+  console.log(e)
+  if(e.target.localName == 'li'){
+    setItemToEdit(e.target)
+  } else if(didUserClickDelete(e)){
     removeItemFromStorage(e.target.parentElement.parentElement.firstChild.textContent)
     e.target.parentElement.parentElement.remove();
     checkUI()
   }
+}
+
+function convertToInput(element) {
+  const inputElement = document.createElement('input');
+  inputElement.value = element.textContent;
+  element.replaceWith(inputElement);
+  inputElement.focus();
+  inputElement.addEventListener('blur', function() {
+      convertToLi(this);
+  });
+}
+
+function convertToLi(inputElement) {
+  const liElement = document.createElement('li')
+  const text = document.createTextNode(inputElement.value)
+  const button = createDeleteButton()
+  // liElement.textContent = inputElement.value;
+  inputElement.replaceWith(liElement);
+  liElement.appendChild(text)
+  liElement.appendChild(button)
+}
+
+function setItemToEdit(item){
+  console.log(item)
+  removeItemFromStorage(item)
+  convertToInput(item)
 }
 
 function removeItemFromStorage(item){
@@ -105,7 +145,7 @@ function loadItemsFromLocalStorage(){
 // Listeners
 
 form.addEventListener('submit', addToDo)
-list.addEventListener('click', removeItem)
+list.addEventListener('click', clickItem)
 clearBtn.addEventListener('click', clearItems)
 itemFilter.addEventListener('keyup', filterItems)
 document.addEventListener('DOMContentLoaded', () => {
