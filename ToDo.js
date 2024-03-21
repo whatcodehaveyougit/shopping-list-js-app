@@ -2,13 +2,11 @@ import LocalStorage from './LocalStorage.js'
 
 class ToDo {
   constructor() {
-    console.log('ToDo class instantiated')
     this.input = document.getElementById("item-input")
     this.form = document.getElementById('item-form')
     this.list = document.getElementById('item-list')
     this.clearBtn = document.getElementById('clear')
     this.itemFilter = document.getElementById('filter')
-    console.log(new LocalStorage)
     this.localStorageObj = new LocalStorage()
     this.startListeners()
   }
@@ -28,13 +26,14 @@ class ToDo {
   addItemToDOM(input){
     if(input === ''){
       alert('Please enter a task')
+    } else {
+      const listItem = document.createElement('li')
+      const text = document.createTextNode(input)
+      const button = this.createDeleteButton()
+      listItem.appendChild(text)
+      listItem.appendChild(button)
+      this.list.appendChild(listItem)
     }
-    const listItem = document.createElement('li')
-    const text = document.createTextNode(input)
-    const button = this.createDeleteButton()
-    listItem.appendChild(text)
-    listItem.appendChild(button)
-    this.list.appendChild(listItem)
   }
 
   addToDo(e){
