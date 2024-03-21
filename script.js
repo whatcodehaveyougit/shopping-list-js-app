@@ -16,7 +16,9 @@ function addItemToStorage(item){
 }
 
 function addItemToDOM(input){
-  console.log(input)
+  if(input === ''){
+    alert('Please enter a task')
+  }
   const listItem = document.createElement('li')
   const text = document.createTextNode(input)
   const button = createDeleteButton()
@@ -75,7 +77,6 @@ function convertToLi(inputElement) {
   const liElement = document.createElement('li')
   const text = document.createTextNode(inputElement.value)
   const button = createDeleteButton()
-  // liElement.textContent = inputElement.value;
   inputElement.replaceWith(liElement);
   liElement.appendChild(text)
   liElement.appendChild(button)
