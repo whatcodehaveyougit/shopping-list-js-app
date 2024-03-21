@@ -5,9 +5,9 @@
 import ToDo from './ToDo.js'; // ES6 import syntax
 
 describe('testing to do list', () => {
-  global.alert = jest.fn();
   let ToDoInstance
   beforeEach(() => {
+    global.alert = jest.fn();
     const html =    `<div class="container">
     <header>
       <img src="images/note.png" alt="" />
@@ -51,5 +51,11 @@ describe('testing to do list', () => {
     ToDoInstance.addItemToDOM('')
     expect(document.querySelector(`#item-list`).innerHTML).toBe('');
     expect(alert).toHaveBeenCalledTimes(1);
+  });
+
+  it('User should not be able to add ToDo list item that is empty', () => {
+    ToDoInstance.addItemToDOM('test')
+    expect(document.querySelector(`#item-list`).innerHTML).toBe('<li>test<button class=\"remove-item btn-link text-red\"><icon class=\"fa-solid fa-xmark\"></icon></button></li>');
+    expect(alert).toHaveBeenCalledTimes(0);
   });
 });
