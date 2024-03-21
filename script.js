@@ -9,7 +9,6 @@ function addItemToStorage(item){
     localStorage.setItem('items', JSON.stringify([{ todo: item}]))
   } else {
     const items = JSON.parse(localStorage.getItem('items'))
-    console.log(items)
     items.push({todo: item})
     localStorage.setItem('items', JSON.stringify(items))
   }
@@ -45,11 +44,9 @@ function doesItemAlreadyExist(item){
 
 function addToDo(e){
   e.preventDefault();
-  console.log(doesItemAlreadyExist(input.value))
   if(doesItemAlreadyExist(input.value)){
     alert('Item already exists')
   } else {
-    console.log('adding item')
     addItemToDOM(input.value)
     addItemToStorage(input.value)
     input.value = ''
@@ -63,7 +60,6 @@ function createDeleteButton(){
   const icon = document.createElement('icon')
   icon.classList = 'fa-solid fa-xmark'
   btn.appendChild(icon)
-  console.log(btn)
   return btn;
 }
 
@@ -75,7 +71,6 @@ function didUserClickDelete(e){
 }
 
 function clickItem(e){
-  console.log(e)
   if(e.target.localName == 'li'){
     setItemToEdit(e.target)
   } else if(didUserClickDelete(e)){
@@ -105,7 +100,6 @@ function convertToLi(inputElement) {
 }
 
 function setItemToEdit(item){
-  console.log(item)
   removeItemFromStorage(item)
   convertToInput(item)
 }
@@ -151,7 +145,6 @@ function filterItems(e){
 }
 
 function loadItemsFromLocalStorage(){
-  console.log('loading items from local storage')
   if(localStorage.getItem('items') !== null){
     const items = JSON.parse(localStorage.getItem('items'))
     items.forEach((item) => {
