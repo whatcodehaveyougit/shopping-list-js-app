@@ -5,7 +5,9 @@
 import ToDo from './ToDo.js'; // ES6 import syntax
 
 describe('testing to do list', () => {
-  let ToDoInstance
+  let ToDoInstance;
+  let localStorageMock;
+
   beforeEach(() => {
     global.alert = jest.fn();
     const html =    `<div class="container">
@@ -44,8 +46,29 @@ describe('testing to do list', () => {
   </div>`;
     document.body.innerHTML = html
     ToDoInstance = new ToDo();
-  })
 
+    localStorageMock = (() => {
+      let store = {};
+      return {
+        getItem: (key) => store[key] || null,
+        setItem: (key, value) => {
+          store[key] = value.toString();
+        },
+        removeItem: (key) => {
+          delete store[key];
+        },
+        clear: () => {
+          store = {};
+        }
+      };
+    })();
+
+    // Assign the mock to the global object
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock
+    });
+
+  })
 
   it('User should not be able to add ToDo list item that is empty', () => {
     ToDoInstance.addItemToDOM('')
@@ -57,5 +80,13 @@ describe('testing to do list', () => {
     ToDoInstance.addItemToDOM('test')
     expect(document.querySelector(`#item-list`).innerHTML).toBe('<li>test<button class=\"remove-item btn-link text-red\"><icon class=\"fa-solid fa-xmark\"></icon></button></li>');
     expect(alert).toHaveBeenCalledTimes(0);
+  });
+
+  it('User should not be able to add same item twice', () => {
+    localStorage.setItem('todo', 'test sigurd');
+    document.getElementById('item-input').value = 'test';
+    const submitEvent = new Event('submit')
+    ToDoInstance.addToDo(submitEvent, true);
+    expect(alert).toHaveBeenCalledTimes(1);
   });
 });

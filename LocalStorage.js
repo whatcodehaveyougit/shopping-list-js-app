@@ -15,6 +15,7 @@ class LocalStorage {
 
   doesItemAlreadyExist(item){
     const items = localStorage.getItem('items')
+    console.log('items', items)
     let doesItemAlreadyExist = false
     if(items !== null){
       const itemsArr = JSON.parse(items)

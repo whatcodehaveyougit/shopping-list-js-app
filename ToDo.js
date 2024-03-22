@@ -13,7 +13,7 @@ class ToDo {
 
   startListeners() {
     // Listeners
-    this.form.addEventListener('submit', this.addToDo.bind(this))
+    this.form.addEventListener('submit', (e) => this.addToDo(e, this.localStorageObj.doesItemAlreadyExist(this.input.value)).bind(this))
     this.list.addEventListener('click', this.clickItem.bind(this))
     this.clearBtn.addEventListener('click', this.clearItems.bind(this))
     this.itemFilter.addEventListener('keyup', this.filterItems.bind(this))
@@ -36,10 +36,9 @@ class ToDo {
     }
   }
 
-  addToDo(e){
+  addToDo(e, doesItemAlreadyExist){
     e.preventDefault();
-    console.log(this.localStorageObj)
-    if(this.localStorageObj.doesItemAlreadyExist(this.input.value)){
+    if(doesItemAlreadyExist){
       alert('Item already exists')
     } else {
       this.addItemToDOM(this.input.value)
