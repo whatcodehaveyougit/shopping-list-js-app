@@ -95,4 +95,16 @@ describe('testing to do list', () => {
     const buttonAsString = button.outerHTML
     expect(buttonAsString).toEqual('<button class=\"remove-item btn-link text-red\"><icon class=\"fa-solid fa-xmark\"></icon></button>');
   });
+
+  it('User click item logic works', () => {
+    const event = {
+      target: {
+        localName: 'li',
+        replaceWith: jest.fn()
+      }
+    }
+    const spy = ToDoInstance.setItemToEdit = jest.fn();
+    ToDoInstance.clickItem(event);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });

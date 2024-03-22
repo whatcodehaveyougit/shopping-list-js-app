@@ -30,15 +30,15 @@ class LocalStorage {
 
   removeItemFromStorage(item){
     const items = JSON.parse(localStorage.getItem('items'))
-    items.forEach((element, index) => {
-      if(element.todo === item){
-        items.splice(index, 1)
-      }
-    })
-    localStorage.setItem('items', JSON.stringify(items))
+    if (items){
+      items.forEach((element, index) => {
+        if(element.todo === item){
+          items.splice(index, 1)
+        }
+      })
+      localStorage.setItem('items', JSON.stringify(items))
+    }
   }
-
-
 
 }
 

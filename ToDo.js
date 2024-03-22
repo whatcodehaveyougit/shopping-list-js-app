@@ -57,17 +57,17 @@ class ToDo {
     return btn;
   }
 
-  didUserClickDelete(e){
-    if (e.target.parentElement.classList.contains('remove-item')){
+  didUserClickDelete(element){
+    if (element.classList.contains('remove-item')){
       return true
     }
     return false
   }
 
   clickItem(e){
-    if(e.target.localName == 'li'){
+    if(e.target.localName === 'li'){
       this.setItemToEdit(e.target)
-    } else if(this.didUserClickDelete(e)){
+    } else if(this.didUserClickDelete(e.target.parentElement)){
       this.localStorageObj.removeItemFromStorage(e.target.parentElement.parentElement.firstChild.textContent)
       e.target.parentElement.parentElement.remove();
       this.checkUI()
@@ -83,8 +83,6 @@ class ToDo {
   }
 
   convertToLi(inputElement) {
-    console.log('converting')
-    console.log(inputElement)
     const liElement = document.createElement('li')
     const text = document.createTextNode(inputElement.value)
     const button = this.createDeleteButton()
