@@ -89,4 +89,10 @@ describe('testing to do list', () => {
     ToDoInstance.addToDo(submitEvent, true);
     expect(alert).toHaveBeenCalledTimes(1);
   });
+
+  it('User should not be able to add ToDo list item that is empty', () => {
+    const button = ToDoInstance.createDeleteButton();
+    const buttonAsString = button.outerHTML
+    expect(buttonAsString).toEqual('<button class=\"remove-item btn-link text-red\"><icon class=\"fa-solid fa-xmark\"></icon></button>');
+  });
 });

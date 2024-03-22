@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1711107133785" clover="3.2.0">
-  <project timestamp="1711107133785" name="All files">
+<coverage generated="1711107170353" clover="3.2.0">
+  <project timestamp="1711107170353" name="All files">
     <metrics statements="103" coveredstatements="29" conditionals="24" coveredconditionals="3" methods="25" coveredmethods="6" elements="152" coveredelements="38" complexity="0" loc="103" ncloc="103" packages="1" files="2" classes="2"/>
     <file name="LocalStorage.js" path="/Users/Siggy/Documents/upskilling/jscourse/shopping-list-sigurd/LocalStorage.js">
       <metrics statements="19" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="6" coveredmethods="1"/>
